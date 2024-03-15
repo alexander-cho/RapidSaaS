@@ -1,18 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+{% extends 'feed/base.html' %}
+
+{% block title %}
+    <title>{{ post.title_tag }}</title>
+{% endblock %}
+
+{% block content %}
+
     <h1>Post</h1>
-    {{ post.title }} <br>
+    {{ post.title }} <br> <hr>
     by {{ post.author.first_name }} <br>
     says: {{ post.body }}
 
     <p>
-        <a href="{% url 'home' %}">Go back</a>
+        <a class="btn btn-secondary" href="{% url 'home' %}">Go back</a>
     </p>
-</body>
-</html>
+
+{% endblock %}
