@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .models import Profile#,Post
+from .models import Profile, Idea#,Post
 # from .forms import PostForm
 from django.urls import reverse_lazy
 from django.http import JsonResponse
@@ -9,7 +9,8 @@ from django.contrib import messages
 # Create your views here.
 
 def home(request):
-    return render(request, 'feed/home.html', {})
+    ideas = Idea.objects.all().order_by('-created_at')
+    return render(request, 'feed/home.html', {'ideas':ideas})
 
 
 def profile_list(request):
@@ -23,8 +24,23 @@ def profile_list(request):
 
 def profile(request, pk):
     if request.user.is_authenticated:
-        profile = Profile.objects.get(user_id = pk)
-        return render(request, 'feed/profile.html', {'profile': profile})
+        profile = Profile.objects.get(user_id=pk)
+        ideas = Idea.objects.filter(user_id=pk).order_by('-created_at')
+        # post form logic for follow/unfollow
+        if request.method == 'POST':
+            # get current user id
+            current_user_profile = request.user.profile
+            # get form data
+            action = request.POST['follow']
+            # decide to follow or unfollow
+            if action == 'unfollow':
+                current_user_profile.follows.remove(profile)
+            elif action == 'follow':
+                current_user_profile.follows.add(profile)
+            # save profile
+            current_user_profile.save()
+
+        return render(request, 'feed/profile.html', {'profile': profile, 'ideas': ideas})
     else:
         messages.success(request, ('Login to view this page'))
         return redirect('home')

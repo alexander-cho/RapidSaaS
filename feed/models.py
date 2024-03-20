@@ -4,6 +4,19 @@ from django.db.models.signals import post_save
 
 # # Create your models here.
 
+class Idea(models.Model):
+    user = models.ForeignKey(
+        User,
+        related_name='ideas',
+        on_delete=models.DO_NOTHING, 
+        )
+    body = models.CharField(max_length=200)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        return f'{self.user} ({self.created_at:%Y-%m-%d %H:%M}): {self.body}'
+
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE) # associate one user to one profile
     follows = models.ManyToManyField(

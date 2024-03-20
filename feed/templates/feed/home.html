@@ -4,7 +4,13 @@
 
     <h1>Ideas</h1>
 
+    {% if ideas %}
+        {% for idea in ideas %}
+        <div class="alert alert-dark" role="alert">
+            {{ idea }} <br>
+        </div>
+        {% endfor %}
+    {% endif %}
 
 {% endblock %}
 
-<h1>HELLO</h1>
