@@ -1,15 +1,24 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-# from .models import Post
+from .models import Profile#,Post
 # from .forms import PostForm
 from django.urls import reverse_lazy
 from django.http import JsonResponse
+from django.contrib import messages
 
 # Create your views here.
 
 def home(request):
     return render(request, 'feed/home.html', {})
 
+
+def profile_list(request):
+    if request.user.is_authenticated:
+        profiles = Profile.objects.exclude(user=request.user) # query all users except self
+        return render(request, 'feed/profile_list.html', {'profiles': profiles})
+    else:
+        messages.success(request, ('Login to view this page'))
+        return redirect('home')
 
 # class HomeView(ListView):
 #     model = Post
