@@ -9,5 +9,6 @@ urlpatterns = [
     # path("post/update/<int:pk>", UpdatePostView.as_view(), name='update-post'),
     # path("post/delete/<int:pk>", DeletePostView.as_view(), name='delete-post')
     path('', views.home, name='home'),
-    path('profile_list', views.profile_list, name='profile-list')
+    path('profile_list', views.profile_list, name='profile-list'),
+    path('profile/<int:pk>', views.profile, name='profile'),
 ]

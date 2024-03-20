@@ -19,6 +19,16 @@ def profile_list(request):
     else:
         messages.success(request, ('Login to view this page'))
         return redirect('home')
+    
+
+def profile(request, pk):
+    if request.user.is_authenticated:
+        profile = Profile.objects.get(user_id = pk)
+        return render(request, 'feed/profile.html', {'profile': profile})
+    else:
+        messages.success(request, ('Login to view this page'))
+        return redirect('home')
+
 
 # class HomeView(ListView):
 #     model = Post
