@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .models import Profile, Idea#,Post
-# from .forms import PostForm
+from .models import Profile, Idea
+from .forms import IdeaForm
 from django.urls import reverse_lazy
 from django.http import JsonResponse
 from django.contrib import messages
@@ -9,8 +9,20 @@ from django.contrib import messages
 # Create your views here.
 
 def home(request):
-    ideas = Idea.objects.all().order_by('-created_at')
-    return render(request, 'feed/home.html', {'ideas':ideas})
+    if request.user.is_authenticated:
+        form = IdeaForm(request.POST or None)
+        if request.method == 'POST':
+            if form.is_valid():
+                idea = form.save(commit=False)
+                idea.user = request.user
+                idea.save()
+                messages.success(request, ('Your idea has been successfully submitted'))
+                return redirect('home')
+        ideas = Idea.objects.all().order_by('-created_at')
+        return render(request, 'feed/home.html', {'ideas':ideas, 'form':form})
+    else:
+        ideas = Idea.objects.all().order_by('-created_at')
+        return render(request, 'feed/home.html', {'ideas':ideas})
 
 
 def profile_list(request):
