@@ -1,11 +1,14 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Profile, Idea
-from .forms import IdeaForm
+from .forms import IdeaForm, SignUpForm
 from django.urls import reverse_lazy
 from django.http import JsonResponse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import UserCreationForm
+from django import forms
+
 
 # Create your views here.
 
@@ -79,6 +82,26 @@ def logout_user(request):
     logout(request)
     messages.success(request, ('You have been logged out'))
     return redirect('home')
+
+
+def register_user(request):
+    form = SignUpForm()
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            # clean the form
+            username = form.cleaned_data['username']
+            # email = form.cleaned_data['email']
+            # first_name = form.cleaned_data['first_name']
+            # last_name = form.cleaned_data['last_name']
+            password = form.cleaned_data['password1'] 
+            # Log in user
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            messages.success(request, ('You have successfully registered'))
+            return redirect('home')
+    return render(request, 'feed/register.html', {'form':form})
 
 
 # class HomeView(ListView):
