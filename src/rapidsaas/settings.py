@@ -14,7 +14,6 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-print(BASE_DIR)
 
 
 # Quick-start development settings - unsuitable for production
@@ -26,7 +25,14 @@ SECRET_KEY = 'django-insecure-ot^8v0)w0287c2if-wh(e*-m87kvnlhtcr2+w_y--l8y7ksx9z
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '.railway.app'
+]
+
+if DEBUG:
+    ALLOWED_HOSTS += [
+        '127.0.0.1'
+    ]
 
 
 # Application definition

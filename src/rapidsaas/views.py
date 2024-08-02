@@ -12,6 +12,24 @@ def home_page_view(request, *args, **kwargs):
     # path = this_dir / 'home.html'
     # html_ = path.read_text()
     my_title = 'RapidSaaS Prototype'
+    context = {
+        'my_title': my_title,
+        'page_visit_count': page_qs.count(),
+        'total_visit_count': qs.count()
+    }
+    html_template = 'home.html'
+
+    # record a page visit 
+    PageVisit.objects.create(path=request.path)
+    return render(request, html_template, context)
+
+
+def about_page_view(request, *args, **kwargs):
+    qs = PageVisit.objects.all()
+    page_qs = PageVisit.objects.filter(path=request.path)
+    # path = this_dir / 'home.html'
+    # html_ = path.read_text()
+    my_title = 'RapidSaaS Prototype'
     context = { 
         'my_title': my_title,
         'page_visit_count': page_qs.count(),
