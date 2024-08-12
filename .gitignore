@@ -166,3 +166,9 @@ cython_debug/
 
 
 RapidSaaS.code-workspace
+
+# ignore vendor static files
+src/staticfiles/vendors
+
+# ignore local static file content
+local-cdn/
