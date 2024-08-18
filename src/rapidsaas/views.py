@@ -1,12 +1,12 @@
 import pathlib
-from django.http import HttpResponse
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 
 from visits.models import PageVisit
 
 this_dir = pathlib.Path(__file__).resolve().parent
 
-def home_page_view(request, *args, **kwargs):
+def home_page_view(request: HttpRequest, *args, **kwargs) -> HttpResponse:
     qs = PageVisit.objects.all()
     page_qs = PageVisit.objects.filter(path=request.path)
     # path = this_dir / 'home.html'
@@ -24,7 +24,7 @@ def home_page_view(request, *args, **kwargs):
     return render(request, html_template, context)
 
 
-def about_page_view(request, *args, **kwargs):
+def about_page_view(request: HttpRequest, *args, **kwargs) -> HttpResponse:
     qs = PageVisit.objects.all()
     page_qs = PageVisit.objects.filter(path=request.path)
     # path = this_dir / 'home.html'
@@ -42,7 +42,7 @@ def about_page_view(request, *args, **kwargs):
     return render(request, html_template, context)
 
 
-def old_home_page_view(request, *args, **kwargs):
+def old_home_page_view(request: HttpRequest, *args, **kwargs) -> HttpResponse:
     # path = this_dir / 'home.html'
     # html_ = path.read_text()
     my_title = 'RapidSaaS Prototype'
