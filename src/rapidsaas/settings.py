@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'visits',
+    'staticmanager'
 ]
 
 MIDDLEWARE = [
@@ -141,11 +142,12 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATICFILES_BASE_DIR = BASE_DIR / 'staticfiles'
+STATICFILES_BASE_DIR.mkdir(parents=True, exist_ok=True)
 STATICFILES_VENDOR_DIR = STATICFILES_BASE_DIR / 'vendors'
 
 # source(s) for command: python manage.py collectstatic
 STATICFILES_DIRS = [
-    STATICFILES_BASE_DIR,
+    STATICFILES_BASE_DIR
 ]
 
 # output for command: python manage.py collectstatic
