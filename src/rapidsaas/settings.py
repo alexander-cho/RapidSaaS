@@ -16,15 +16,31 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Quick-start development settings - unsuitable for production
+# Quick-start development setting s - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('DJANGO_SECRET_KEY')
- 
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DJANGO_DEBUG', cast=bool)
+
+# email service configuration
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = config('EMAIL_HOST', cast=str, default='smtp.gmail.com')
+EMAIL_PORT = config('EMAIL_PORT', cast=str, default='587')
+EMAIL_USE_TLS=config('EMAIL_USE_TLS', cast=bool, default=True)
+EMAIL_USE_SSL=config('EMAIL_USE_SSL', cast=bool, default=False)
+EMAIL_HOST_USER = config('EMAIL_HOST_USER', cast=str, default=None)
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', cast=str, default=None)
+
+# 500 server errors
+ADMIN_USER_NAME = config('ADMIN_USER_NAME', default='Admin user')
+ADMIN_USER_EMAIL = config('ADMIN_USER_EMAIL', default=None)
+
+ADMINS = [(ADMIN_USER_NAME, ADMIN_USER_EMAIL)]
+MANAGERS = ADMINS
 
 
 ALLOWED_HOSTS = [
@@ -94,7 +110,7 @@ DATABASES = {
 }
 
 
-DATABASE_URL = config('DATABASE_URL', default=None)
+DATABASE_URL = config('DATABASE_URL', cast=str)
 
 if DATABASE_URL is not None:
     import dj_database_url
