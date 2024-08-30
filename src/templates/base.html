@@ -8,11 +8,11 @@
             {% endblock title %}
         </title>
 
-        {% include 'base/css.html' %}
+        {% comment %} {% include 'base/css.html' %} {% endcomment %}
     </head>
 
     <body>
-        {% include 'nav/navbar.html' %}
+        {% comment %} {% include 'nav/navbar.html' %} {% endcomment %}
 
         <h1 class="text-lg font-medium">{{ my_title }}</h1>
 
@@ -20,6 +20,6 @@
 
         {% endblock %}
 
-        {% include 'base/js.html' %}
+        {% comment %} {% include 'base/js.html' %} {% endcomment %}
     </body>
 </html>
