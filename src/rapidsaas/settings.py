@@ -64,12 +64,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'visits',
-    # 'staticmanager'
+    'staticmanager'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    # "whitenoise.middleware.WhiteNoiseMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -158,25 +158,25 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
-# STATICFILES_BASE_DIR = BASE_DIR / 'staticfiles'
-# STATICFILES_BASE_DIR.mkdir(parents=True, exist_ok=True)
-# STATICFILES_VENDOR_DIR = STATICFILES_BASE_DIR / 'vendors'
+STATICFILES_BASE_DIR = BASE_DIR / 'staticfiles'
+STATICFILES_BASE_DIR.mkdir(parents=True, exist_ok=True)
+STATICFILES_VENDOR_DIR = STATICFILES_BASE_DIR / 'vendors'
 
-# # source(s) for command: python manage.py collectstatic
-# STATICFILES_DIRS = [
-#     STATICFILES_BASE_DIR
-# ]
+# source(s) for command: python manage.py collectstatic
+STATICFILES_DIRS = [
+    STATICFILES_BASE_DIR
+]
 
-# # output for command: python manage.py collectstatic
-# STATIC_ROOT = BASE_DIR.parent / 'local-cdn'
+# output for command: python manage.py collectstatic
+STATIC_ROOT = BASE_DIR.parent / 'local-cdn'
 
 
-# # whitenoise static files storage
-# STORAGES = {
-#     "staticfiles": {
-#         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-#     },
-# }
+# whitenoise static files storage
+STORAGES = {
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 
 # Default primary key field type
