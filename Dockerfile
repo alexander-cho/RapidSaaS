@@ -42,22 +42,22 @@ COPY ./src /code
 # install the Python project requirements
 RUN pip install -r /tmp/requirements.txt
 
-# # add the Django environment variables (fixes deployment issue on Railway)
-# # these environment variables are set as build arguments and used for configuring Django settings
-# ARG DJANGO_SECRET_KEY
-# ENV DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+# add the Django environment variables (fixes deployment issue on Railway)
+# these environment variables are set as build arguments and used for configuring Django settings
+ARG DJANGO_SECRET_KEY
+ENV DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
 
-# ARG DJANGO_DEBUG=0
-# ENV DJANGO_DEBUG=${DJANGO_DEBUG}
+ARG DJANGO_DEBUG=0
+ENV DJANGO_DEBUG=${DJANGO_DEBUG}
 
-# # database isn't available during build
-# # run any other commands that do not need the database such as:
-# RUN python manage.py pullstatic
-# RUN python manage.py collectstatic --noinput
+# database isn't available during build
+# run any other commands that do not need the database such as:
+RUN python manage.py pullstatic
+RUN python manage.py collectstatic --noinput
 
 # set the Django default project name
 ARG PROJECT_NAME="rapidsaas"
-
+ 
 # create a bash script to run the Django project
 # this script will execute at runtime when the container starts and the database is available
 RUN printf "#!/bin/bash\n" > ./paracord_runner.sh && \

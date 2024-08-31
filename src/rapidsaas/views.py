@@ -8,6 +8,9 @@ from visits.models import PageVisit
 this_dir = pathlib.Path(__file__).resolve().parent
 
 def home_page_view(request: HttpRequest, *args, **kwargs) -> HttpResponse:
+    # record a page visit 
+    PageVisit.objects.create(path=request.path)
+
     qs = PageVisit.objects.all()
     page_qs = PageVisit.objects.filter(path=request.path)
     # path = this_dir / 'home.html'
@@ -20,12 +23,13 @@ def home_page_view(request: HttpRequest, *args, **kwargs) -> HttpResponse:
     }
     html_template = 'home.html'
 
-    # record a page visit 
-    PageVisit.objects.create(path=request.path)
     return render(request, html_template, context)
 
 
 def about_page_view(request: HttpRequest, *args, **kwargs) -> HttpResponse:
+    # record a page visit 
+    PageVisit.objects.create(path=request.path)
+    
     qs = PageVisit.objects.all()
     page_qs = PageVisit.objects.filter(path=request.path)
     # path = this_dir / 'home.html'
@@ -38,8 +42,6 @@ def about_page_view(request: HttpRequest, *args, **kwargs) -> HttpResponse:
     }
     html_template = 'home.html'
 
-    # record a page visit 
-    PageVisit.objects.create(path=request.path)
     return render(request, html_template, context)
 
 
