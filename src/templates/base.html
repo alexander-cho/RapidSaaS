@@ -19,10 +19,14 @@
 
         {% block content %}
 
-        {% endblock %}
+        {% if messages %}
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        {% endif %}
+
+        {% endblock content %}
 
         {% include 'base/js.html' %}
-        
-
     </body>
 </html>
