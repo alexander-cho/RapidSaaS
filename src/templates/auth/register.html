@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Register - {{ block.super }}
+{% endblock title %}
+
+{% block content %}
+<h1>Register</h1>
+
+<form method="post" action="/register/">
+    {% csrf_token %}
+    <input type="text" name="username" placeholder="Username">
+    <input type="email" name="email" placeholder="Email">
+    <input type="password" name="password" placeholder="Password">
+    <input type="password" name="password-confirm" placeholder="Confirm password">
+
+    <button type="submit">Register</button>
+</form>
+
+{% endblock content %}
