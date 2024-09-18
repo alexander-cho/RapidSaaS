@@ -61,3 +61,23 @@ def old_home_page_view(request: HttpRequest, *args, **kwargs) -> HttpResponse:
             </html>
             """.format(**context)
     return HttpResponse(html_)
+
+
+VALID_CODE = 'authorized-user'
+
+
+def password_protected_view(request, *args, **kwargs):
+    """
+    View for restricted access/protected pages
+    """
+    is_allowed = request.session.get('protected-page-allowed') or 0
+    if request.method == 'POST':
+        # 'code' from input name in protected/entry.html form
+        user_password_data = request.POST.get('code') or None
+        if user_password_data == VALID_CODE:
+            # set authenticated to True
+            is_allowed = 1
+            request.session['protected-page-allowed'] = is_allowed
+    if is_allowed:
+        return render(request, 'protected/success.html', {})
+    return render(request, 'protected/authenticate.html', {})
