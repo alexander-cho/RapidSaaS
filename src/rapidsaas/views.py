@@ -1,6 +1,8 @@
 import pathlib
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 
 from visits.models import PageVisit
 
@@ -81,3 +83,13 @@ def password_protected_view(request, *args, **kwargs):
     if is_allowed:
         return render(request, 'protected/success.html', {})
     return render(request, 'protected/authenticate.html', {})
+
+
+@login_required
+def login_required_view(request):
+    return render(request, 'protected/user-only.html')
+
+
+@staff_member_required
+def staff_only_view(request):
+    return render(request, 'protected/user-only.html')
