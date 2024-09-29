@@ -66,6 +66,7 @@ INSTALLED_APPS = [
 
     'visits',
     'staticmanager',
+    'profiles',
 
     # third party
     'allauth',

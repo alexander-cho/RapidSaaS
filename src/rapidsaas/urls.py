@@ -19,6 +19,7 @@ from django.urls import path, include
 
 from .views import home_page_view, about_page_view, password_protected_view, login_required_view, staff_only_view
 from auth import views as auth_views
+from profiles import views as profile_views
 
 urlpatterns = [
     path('', home_page_view, name='home'),
@@ -30,4 +31,5 @@ urlpatterns = [
     path('register/', auth_views.register_view),
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
+    path('profiles/', include('profiles.urls')),
 ]
